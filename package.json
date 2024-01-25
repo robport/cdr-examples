@@ -4,7 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "authenticate": "ts-node ./src/authenticate.ts",
-    "signature": "ts-node ./src/generate-signature.ts"
+    "signature": "ts-node ./src/generate-signature.ts",
+    "hash": "ts-node ./src/hash-email.ts"
   },
   "license": "ISC",
   "dependencies": {
