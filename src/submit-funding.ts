@@ -1,8 +1,9 @@
 import { createSign, randomBytes } from 'crypto';
 import axios, { AxiosError } from 'axios';
 import fs from 'fs';
+import { generateSignature } from './generate-signature';
 
-async function authenticate() {
+async function submitFunding() {
   const messageStr = JSON.stringify({
     timestamp: new Date().toISOString(),
     randomText: randomBytes(16).toString('hex'),
@@ -10,18 +11,25 @@ async function authenticate() {
   });
 
   const privateKey = fs.readFileSync('private_key.pem', 'utf8').toString();
-  const signature = createSign('SHA256')
+
+  const authSignature = createSign('SHA256')
     .update(messageStr)
     .end()
     .sign(privateKey, 'hex');
 
+  const { address, signature, message } = generateSignature();
+
   try {
     const result = await axios.request({
-      url: 'https://customer-deposits-registry.com/api/system',
-      method: 'get',
+      url: 'https://customer-deposits-registry.com/api/funding-submission',
+      method: 'post',
       headers: {
         'x-auth-nonce': messageStr,
-        'x-auth-signature': signature
+        'x-auth-signature': authSignature
+      },
+      data: {
+        addresses: [{ address, signature }],
+        signingMessage: message
       }
     });
     console.log('Result: ', result.data);
@@ -34,4 +42,4 @@ async function authenticate() {
   }
 }
 
-authenticate().then();
+submitFunding().then();
