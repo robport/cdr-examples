@@ -20,5 +20,9 @@ export function generateSignature() {
   return { address, message, signature };
 }
 
-console.log(generateSignature());
+const signature =generateSignature();
+console.log(signature);
+const success = signature.signature ===  'IH34/D9QxIBeLP4OIsYfle5boaAskosLjRIqAzL+Ok/6VHBsIudMOMsDDdBDZV3L+MvvYwgr9ZxnP10Eydw/woQ='
+console.log(`Test Result: ${success ? 'Pass' : 'Fail'}`);
+
 
