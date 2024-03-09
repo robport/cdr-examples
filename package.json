@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "funding-status": "ts-node ./src/get-funding-status.ts",
     "submit-funding": "ts-node ./src/submit-funding.ts",
-    "authenticate": "ts-node ./src/authenticate.ts",
-    "signature": "ts-node ./src/generate-signature.ts",
-    "hash": "ts-node ./src/hash-email.ts",
-    "bip44": "ts-node ./src/bip44.ts"
+    "auth": "ts-node ./src/authenticate.ts",
+    "sign": "ts-node ./src/test-sign.ts",
+    "hash": "ts-node ./src/hash-email.ts"
   },
   "license": "ISC",
   "dependencies": {

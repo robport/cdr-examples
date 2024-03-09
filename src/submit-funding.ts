@@ -2,6 +2,7 @@ import { createSign, randomBytes } from 'crypto';
 import axios, { AxiosError } from 'axios';
 import fs from 'fs';
 import { generateSignature } from './generate-signature';
+import { getLastBlockHash } from './get-last-block-hash';
 
 async function submitFunding() {
   const messageStr = JSON.stringify({
@@ -17,19 +18,20 @@ async function submitFunding() {
     .end()
     .sign(privateKey, 'hex');
 
-  const { address, signature, message } = generateSignature();
+  const latestBlockHash = await getLastBlockHash(true);
+
+  const { address, signature, message } = generateSignature(latestBlockHash);
 
   try {
     const result = await axios.request({
-      url: 'https://customer-deposits-registry.com/api/funding-submission',
+      url: 'http://localhost:3101/api/funding-submission',
       method: 'post',
       headers: {
         'x-auth-nonce': messageStr,
         'x-auth-signature': authSignature
       },
       data: {
-        addresses: [{ address, signature }],
-        signingMessage: message
+        addresses: [{ message, address, signature }],
       }
     });
     console.log('Result: ', result.data);

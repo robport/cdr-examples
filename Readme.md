@@ -18,10 +18,23 @@
 - Copy the contents of public_key.pem into the box and hit save
 
 3. Run the example program
-- npm run authenticate
+- npm run auth
 
 ## Signature Generation
 
 - cd cdr-examples
 - npm i
-- npm run signature
+- npm run sign
+
+## Submit Funding
+
+Note that funding is checked asynchronously, so after submitting, you have to check the status of the submission
+
+# To submit
+npm run submit-funding
+
+# To check status
+npm run funding-status
+
+
+
