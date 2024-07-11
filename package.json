@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "verify-by-id": "ts-node src/verify-by-uid.ts",
     "funding-status": "ts-node ./src/get-funding-status.ts",
     "submit-funding": "ts-node ./src/submit-funding.ts",
     "auth": "ts-node ./src/authenticate.ts",
